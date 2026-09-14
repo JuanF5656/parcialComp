@@ -3,57 +3,62 @@ package algoritmos;
 import estructuras.Edge;
 import estructuras.UnionFind;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class Kruskal {
     /*
      * Time complexity: O(C log C), where C is the number of cables.
-     * Sorting the cables is the dominant operation.
-     *
-     * Space complexity: O(N + C), considering the list of cables
-     * and the Union-Find structure.
-     *
-     * Kruskal is appropriate because it builds a minimum spanning
-     * tree by selecting the cheapest cable that does not create a cycle.
-     * Union-Find efficiently detects whether two intersections are
-     * already connected.
+     * Space complexity: O(N + C).
      */
-    public long minimumSpanningTree(int numberOfVertices, List<Edge> edges) {
+    public KruskalResult minimumSpanningTree(int numberOfVertices, List<Edge> edges) {
 
-        // Sort cables from cheapest to most expensive
-        edges.sort(Comparator.comparingLong(Edge::getWeight));
+        // Copy before sorting so callers can still use their original list afterward
+        // (Mision4 reuses `edges` to build the drawing graph once this returns).
+        List<Edge> sorted = new ArrayList<>(edges);
+        sorted.sort(Comparator.comparingLong(Edge::getWeight));
 
         UnionFind unionFind = new UnionFind(numberOfVertices);
 
         long totalCost = 0;
         int edgesUsed = 0;
+        List<Edge> usedEdges = new ArrayList<>();
 
-        for (Edge edge : edges) {
-
+        for (Edge edge : sorted) {
             int from = edge.getFrom();
             int to = edge.getTo();
 
-            // Only use the cable if it does not create a cycle
+            // connected(from, to) is also what silently rejects self-loops:
+            // find(a) == find(a) is always true, so they never get added.
             if (!unionFind.connected(from, to)) {
-
                 unionFind.union(from, to);
-
                 totalCost += edge.getWeight();
+                usedEdges.add(edge);
                 edgesUsed++;
 
-                // An MST with N vertices always has N - 1 edges
-                if (edgesUsed == numberOfVertices - 1) {
-                    break;
-                }
+                if (edgesUsed == numberOfVertices - 1) break;
             }
         }
 
-        // If we didn't connect all vertices, an MST doesn't exist
         if (edgesUsed != numberOfVertices - 1) {
-            return -1;
+            return new KruskalResult(-1, List.of());
         }
 
-        return totalCost;
+        return new KruskalResult(totalCost, usedEdges);
+    }
+
+    public static class KruskalResult {
+        private final long totalCost;
+        private final List<Edge> usedEdges;
+
+        public KruskalResult(long totalCost, List<Edge> usedEdges) {
+            this.totalCost = totalCost;
+            this.usedEdges = usedEdges;
+        }
+
+        public long getTotalCost() { return totalCost; }
+        public List<Edge> getUsedEdges() { return usedEdges; }
+        public boolean isConnected() { return totalCost != -1; }
     }
 }

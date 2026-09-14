@@ -1,32 +1,27 @@
 package UI;
 
-import estructuras.Graph;
-
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class MainWindow extends JFrame {
-
-    private final GraphPanel graphPanel;
 
     public MainWindow() {
 
         setTitle("The Feline Graph Chronicles");
-
-        setSize(1000, 700);
-
+        setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLocationRelativeTo(null);
 
-        graphPanel = new GraphPanel();
+        JTabbedPane tabs = new JTabbedPane();
 
-        add(graphPanel);
+        tabs.addTab("Mission 1 — Minefield",
+                new MissionPlaceholderPanel("Rescuing Nina from the Minefield", "BFS & DFS"));
+        tabs.addTab("Mission 2 — Claude Accounts", new Mision2Panel());
+        tabs.addTab("Mission 3 — Food Stash",
+                new MissionPlaceholderPanel("The Ultimate Food Stash", "Floyd-Warshall & Bellman-Ford"));
+        tabs.addTab("Mission 4 — Network", new Mision4Panel());
+
+        add(tabs);
 
         setVisible(true);
-    }
-
-    public void setGraph(Graph graph) {
-
-        graphPanel.setGraph(graph);
     }
 }

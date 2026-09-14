@@ -1,20 +1,18 @@
 package misiones;
 
 import algoritmos.Dijkstra;
+import algoritmos.Dijkstra.DijkstraResult;
 import estructuras.Graph;
 import parser.InputParser;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Mision2 {
 
-    private final Dijkstra dijkstra;
+    private final Dijkstra dijkstra = new Dijkstra();
 
-    public Mision2() {
-        dijkstra = new Dijkstra();
-    }
-
-    public String resolverCaso(InputParser parser, int caseNumber) throws IOException {
+    public CaseResult resolverCaso(InputParser parser, int caseNumber) throws IOException {
 
         int numberOfVertices = parser.nextInt();
         int numberOfConnections = parser.nextInt();
@@ -24,22 +22,35 @@ public class Mision2 {
         Graph graph = new Graph(numberOfVertices);
 
         for (int i = 0; i < numberOfConnections; i++) {
-
             int a = parser.nextInt();
             int b = parser.nextInt();
             long weight = parser.nextLong();
-
-            // Mission 2 connections are bidirectional
             graph.addEdge(a, b, weight);
             graph.addEdge(b, a, weight);
         }
 
-        long result = dijkstra.shortestPath(graph, start, destination);
+        DijkstraResult result = dijkstra.shortestPath(graph, start, destination);
 
-        if (result == Long.MAX_VALUE) {
-            return "Case #" + caseNumber + ": Nina is very sad";
+        String line = result.isReachable()
+                ? "Case #" + caseNumber + ": " + result.getDistance()
+                : "Case #" + caseNumber + ": Nina is very sad";
+
+        return new CaseResult(line, graph, result.getPath());
+    }
+
+    public static class CaseResult {
+        private final String outputLine;
+        private final Graph graph;
+        private final List<Integer> path;
+
+        public CaseResult(String outputLine, Graph graph, List<Integer> path) {
+            this.outputLine = outputLine;
+            this.graph = graph;
+            this.path = path;
         }
 
-        return "Case #" + caseNumber + ": " + result;
+        public String getOutputLine() { return outputLine; }
+        public Graph getGraph() { return graph; }
+        public List<Integer> getPath() { return path; }
     }
 }

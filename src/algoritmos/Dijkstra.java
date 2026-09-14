@@ -3,78 +3,75 @@ package algoritmos;
 import estructuras.Edge;
 import estructuras.Graph;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
 
-    private static final long INF = Long.MAX_VALUE;
+    public static final long INF = Long.MAX_VALUE;
 
-    public long shortestPath(Graph graph, int start, int destination) {
+    public DijkstraResult shortestPath(Graph graph, int start, int destination) {
 
-        int numberOfVertices = graph.getNumberOfVertices();
-
-        // distance[i] = cheapest known cost to reach node i
-        long[] distance = new long[numberOfVertices];
+        int n = graph.getNumberOfVertices();
+        long[] distance = new long[n];
+        int[] predecessor = new int[n];
         Arrays.fill(distance, INF);
-
-        // The cost of reaching the starting node is 0
+        Arrays.fill(predecessor, -1);
         distance[start] = 0;
 
-        // PriorityQueue stores nodes ordered by their current distance
         PriorityQueue<NodeDistance> priorityQueue =
-                new PriorityQueue<>(
-                        (a, b) -> Long.compare(a.distance, b.distance)
-                );
-
+                new PriorityQueue<>((a, b) -> Long.compare(a.distance, b.distance));
         priorityQueue.add(new NodeDistance(start, 0));
 
         while (!priorityQueue.isEmpty()) {
-
             NodeDistance current = priorityQueue.poll();
+            if (current.distance != distance[current.node]) continue;
+            if (current.node == destination) break; // finalized, safe to stop
 
-            int currentNode = current.node;
-            long currentDistance = current.distance;
-
-            // Ignore outdated entries
-            if (currentDistance != distance[currentNode]) {
-                continue;
-            }
-
-            // We reached the destination
-            if (currentNode == destination) {
-                return currentDistance;
-            }
-
-            // Examine all edges connected to the current node
-            for (Edge edge : graph.getAdjacencyList().get(currentNode)) {
-
+            for (Edge edge : graph.getAdjacencyList().get(current.node)) {
                 int neighbor = edge.getTo();
-                long weight = edge.getWeight();
+                long newDistance = current.distance + edge.getWeight();
 
-                long newDistance = currentDistance + weight;
-
-                // Found a cheaper route
                 if (newDistance < distance[neighbor]) {
-
                     distance[neighbor] = newDistance;
-
-                    priorityQueue.add(
-                            new NodeDistance(neighbor, newDistance)
-                    );
+                    predecessor[neighbor] = current.node;
+                    priorityQueue.add(new NodeDistance(neighbor, newDistance));
                 }
             }
         }
 
-        // Destination cannot be reached
-        return INF;
+        if (distance[destination] == INF) {
+            return new DijkstraResult(INF, List.of());
+        }
+
+        List<Integer> path = new ArrayList<>();
+        for (int at = destination; at != -1; at = predecessor[at]) {
+            path.add(at);
+        }
+        java.util.Collections.reverse(path);
+
+        return new DijkstraResult(distance[destination], path);
+    }
+
+    public static class DijkstraResult {
+        private final long distance;
+        private final List<Integer> path;
+
+        public DijkstraResult(long distance, List<Integer> path) {
+            this.distance = distance;
+            this.path = path;
+        }
+
+        public long getDistance() { return distance; }
+        public List<Integer> getPath() { return path; }
+        public boolean isReachable() { return distance != INF; }
     }
 
     private static class NodeDistance {
-
         private final int node;
         private final long distance;
-
         public NodeDistance(int node, long distance) {
             this.node = node;
             this.distance = distance;
