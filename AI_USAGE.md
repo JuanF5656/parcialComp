@@ -36,4 +36,11 @@
     al mismo componente, sino, se permite la union; si sí se cancela por que crearía
     un ciclo. Se para a los N-1 cables aceptados y si no se alcanzan los N-1
     quiere decir que el grafo no estaba conectado del todo.
+
+    Thomas Gonzalez: Aprendi que el BFS es para encontrar los 
+    caminos mas cortos 
+    mientas que el DFS es para encontrar los
+    mas largos para encontrar las salidas, estos dos algoritmos usando
+    FIFO, por otro lado tambien vi que el bellman ford es mas lento que el dijkstra 
+    pero el ford tolera negativos y detecta ciclos.
     
