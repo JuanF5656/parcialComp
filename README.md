@@ -9,8 +9,8 @@ Proyecto de curso **Lenguajes y Compiladores** — Universidad EIA. Aplicación 
 
 | Persona | Nombre | Responsabilidad |
 |---|---|---|
-| Persona A | Juan Felipe Atehortúa | Misión 1 (BFS y DFS), Misión 3 (Floyd-Warshall, Bellman-Ford, verificación cruzada), paneles de dibujo de grilla y grafo dirigido |
-| Persona B | Thomas González Aguilar | Misión 2 (Dijkstra), Misión 4 (Kruskal), armazón de la interfaz gráfica, repositorio |
+| Persona A | Thomas González Aguilar | Misión 1 (BFS y DFS), Misión 3 (Floyd-Warshall, Bellman-Ford, verificación cruzada), paneles de dibujo de grilla y grafo dirigido |
+| Persona B | Juan Felipe Atehortúa | Misión 2 (Dijkstra), Misión 4 (Kruskal), armazón de la interfaz gráfica, repositorio |
 
 
 
