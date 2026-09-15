@@ -12,7 +12,6 @@ Proyecto de curso **Lenguajes y Compiladores** — Universidad EIA. Aplicación 
 | Persona A | Juan Felipe Atehortúa | Misión 1 (BFS y DFS), Misión 3 (Floyd-Warshall, Bellman-Ford, verificación cruzada), paneles de dibujo de grilla y grafo dirigido |
 | Persona B | Thomas González Aguilar | Misión 2 (Dijkstra), Misión 4 (Kruskal), armazón de la interfaz gráfica, repositorio |
 
-Ambos integrantes son responsables de la entrega completa y pueden explicar y modificar cualquier parte del proyecto.
 
 ## Cómo compilar y ejecutar
 
@@ -28,9 +27,6 @@ Con un solo comando desde un clon limpio:
 ./build.sh
 ```
 
-**Requisitos:** JDK 17 o superior. El proyecto no usa Maven ni Gradle — solo `javac`/`java`, así que no depende de ningún repositorio externo para compilar.
-
-También se puede abrir la carpeta con IntelliJ IDEA y ejecutar la clase `Main`.
 
 ## Estructura del proyecto
 
