@@ -55,12 +55,7 @@ public class GraphPanel extends JPanel {
         repaint();
     }
 
-    /**
-     * Mission 3's graph is directed (A -> B does not imply B -> A can be
-     * walked), so both edges of a pair like 1->2 and 2->1 must be tracked
-     * and highlighted independently — unlike {@link #setGraphWithEdgeHighlights},
-     * whose edgeKey is intentionally symmetric for Missions 2 and 4.
-     */
+
     public void setDirectedGraphWithEdgeHighlights(Graph graph, List<Edge> highlightedEdgeList) {
         this.directed = true;
         this.graph = graph;
