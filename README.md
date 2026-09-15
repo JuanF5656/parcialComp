@@ -1,4 +1,4 @@
-Listo, aquí está con los dos integrantes y sus responsabilidades reales según lo que hicimos:
+
 
 ```markdown
 # The Feline Graph Chronicles
@@ -12,20 +12,6 @@ Proyecto de curso **Lenguajes y Compiladores** — Universidad EIA. Aplicación 
 | Persona A | Juan Felipe Atehortúa | Misión 1 (BFS y DFS), Misión 3 (Floyd-Warshall, Bellman-Ford, verificación cruzada), paneles de dibujo de grilla y grafo dirigido |
 | Persona B | Thomas González Aguilar | Misión 2 (Dijkstra), Misión 4 (Kruskal), armazón de la interfaz gráfica, repositorio |
 
-
-## Cómo compilar y ejecutar
-
-Con un solo comando desde un clon limpio:
-
-```bash
-./run.sh
-```
-
-`run.sh` compila el proyecto a `./out` si hace falta y abre la interfaz gráfica (`Main`). Para compilar sin ejecutar:
-
-```bash
-./build.sh
-```
 
 
 ## Estructura del proyecto
